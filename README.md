@@ -1,9 +1,5 @@
-# smartapi2trapi
+# Set up SmartAPI-TRAPI service
 
-
-# Project Title
-
-SmartAPI-TRAPI server
 
 ## Description
 

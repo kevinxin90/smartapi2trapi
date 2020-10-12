@@ -3,7 +3,7 @@
 
 ## Description
 
-This project aims to allow user to set up a Translator Reasoner API (TRAPI) server based on SmartAPI specification.
+This project aims to help user set up a Translator Reasoner API (TRAPI) server based on SmartAPI specification.
 
 ## How to use
 
@@ -12,6 +12,24 @@ This project aims to allow user to set up a Translator Reasoner API (TRAPI) serv
 Replace {port_id} with the port ID you would like to run the application (TRAPI server is running on port 3000 within the docker).
 
 Replace {smartapi_id} with the SmartAPI ID of your API registered in SmartAPI, which can be found in the SmartAPI Registry.
+
+Three endpoints will be available once the server is up.
+
+1. /: smartapi interface
+2. /predicates: get all predicates available from the API
+3. /query: TRAPI query endpoint
+
+### Access the SmartAPI interface for the API
+
+`http://<HOST>:3000`
+
+### Access the /predicates endpoint for the API
+
+`http://<HOST>:3000/predicates`
+
+### Access the /query endpoint for the API (need to use POST method and pass in query graph)
+
+`POST http://<HOST>:3000/query`
 
 ## How to locate your API's SmartAPI ID
 
@@ -82,26 +100,4 @@ A docker file is included in the base directory and can be used to build the cus
 docker build -t smartapi2trapi .
 ```
 
-
-
 Public Docker image located at [link](https://hub.docker.com/repository/docker/biothings/bte_reasoner_api)
-
-## Usage
-
-Three endpoints will be available once the server is up.
-
-1. /: smartapi interface
-2. /predicates: get all predicates available from the API
-3. /query: TRAPI query endpoint
-
-### Access the SmartAPI interface for the API
-
-`http://<HOST>:3000`
-
-### Access the /predicates endpoint for the API
-
-`http://<HOST>:3000/predicates`
-
-### Access the /query endpoint for the API (need to use POST method and pass in query graph)
-
-`POST http://<HOST>:3000/query`

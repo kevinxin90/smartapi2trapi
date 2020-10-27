@@ -4,6 +4,7 @@ const express = require('express');
 const compression = require('compression')
 const cors = require("cors");
 var bodyParser = require('body-parser');
+const e = require("express");
 
 const app = express()
 
@@ -14,7 +15,9 @@ const port = 3000
 var jsonParser = bodyParser.json()
 
 let smartapiID;
-if (process.argv.length > 2) {
+if (process.argv.length > 3) {
+    smartapiID = process.argv[3];
+} else if (process.argv.length > 2) {
     smartapiID = process.argv[2];
 } else {
     smartapiID = "27a5b60716c3a401f2c021a5b718c5b1";

@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./
-          file: .。/Dockerfile
+          file: ../Dockerfile
           push: true
           tags: biothings/smartapi2reasoner:latest
 

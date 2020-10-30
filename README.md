@@ -7,17 +7,20 @@ This project aims to help user set up a Translator Reasoner API (TRAPI) server b
 
 ## How to use
 
-`docker run -p {port_id}:3000 biothings/smartapi2trapi {smartapi_id}`
+`docker run -p {port_id}:3000 biothings/smartapi2trapi --smartapi_id {smartapi_id}`
 
-Replace {port_id} with the port ID you would like to run the application (TRAPI server is running on port 3000 within the docker).
+Replace **{port_id}** with the port ID you would like to run the application (TRAPI server is running on port 3000 within the docker).
 
-Replace {smartapi_id} with the SmartAPI ID of your API registered in SmartAPI, which can be found in the SmartAPI Registry.
+Replace **{smartapi_id}** with the [SmartAPI ID](#how-to-locate-your-apis-smartapi-id) of your API registered in SmartAPI, which can be found in the [SmartAPI Registry](https://smart-api.info/registry).
+
+For example, to set up a TRAPI API for [MyGene.info](https://smart-api.info/ui/59dce17363dce279d389100834e43648) (SmartAPI ID: 59dce17363dce279d389100834e43648), you could run:
+`docker run -p 3000:3000 biothings/smartapi2trapi --smartapi_id 59dce17363dce279d389100834e43648`
 
 Three endpoints will be available once the server is up.
 
-1. /: smartapi interface
-2. /predicates: get all predicates available from the API
-3. /query: TRAPI query endpoint
+1. **/**: smartapi interface
+2. **/predicates**: get all predicates available from the API
+3. **/query**: TRAPI query endpoint
 
 ### Access the SmartAPI interface for the API
 
@@ -94,10 +97,10 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
 ## Deploy
 
-A docker file is included in the base directory and can be used to build the customized container
+A docker file is included in the base directory and can be used to build the customized container.
 
 ```bash
 docker build -t smartapi2trapi .
 ```
 
-Public Docker image located at [link](https://hub.docker.com/repository/docker/biothings/bte_reasoner_api)
+Public Docker image located at [link](https://hub.docker.com/repository/docker/biothings/smartapi2trapi)

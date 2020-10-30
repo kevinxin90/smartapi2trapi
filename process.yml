@@ -1,6 +1,6 @@
 apps:
     - name: smartapi2trapi
-      script: ./src/server.js
+      script: ./src/index.js
       exec_mode: cluster
       instances: max
       

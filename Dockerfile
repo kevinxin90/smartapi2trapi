@@ -20,4 +20,4 @@ EXPOSE 3000
 
 ENTRYPOINT [ "pm2-runtime", "./process.yml" ]
 
-CMD ["27a5b60716c3a401f2c021a5b718c5b1"]
+CMD ["--smartapi_id", "27a5b60716c3a401f2c021a5b718c5b1"]

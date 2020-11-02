@@ -100,7 +100,7 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 A docker file is included in the base directory and can be used to build the customized container.
 
 ```bash
-docker build -t smartapi2trapi .
+docker build -t biothings/smartapi2trapi .
 ```
 
 Public Docker image located at [link](https://hub.docker.com/repository/docker/biothings/smartapi2trapi)

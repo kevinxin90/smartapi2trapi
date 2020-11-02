@@ -8,6 +8,7 @@ on:
 jobs:
   path-context:
     runs-on: ubuntu-latest
+    needs: node.js
     steps:
       -
         name: Checkout

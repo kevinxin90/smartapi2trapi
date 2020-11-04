@@ -1,4 +1,4 @@
-const predicates = require("../src/predicates");
+const predicates = require("../../src/predicates");
 const meta_kg = require("@biothings-explorer/smartapi-kg");
 const snakeCase = require("snake-case");
 
@@ -19,6 +19,13 @@ describe("Testing constructing predicates", () => {
             return {
                 getOps: () => {
                     return [
+                        {
+                            association: {
+                                input_type: "Gene",
+                                output_type: "ChemicalSubstance",
+                                predicate: "related_to"
+                            }
+                        },
                         {
                             association: {
                                 input_type: "Gene",
@@ -58,6 +65,7 @@ describe("Testing constructing predicates", () => {
         expect(pd).toHaveProperty("Gene");
         expect(pd['Gene']).toHaveProperty("ChemicalSubstance");
         expect(pd['Gene']).toHaveProperty("Disease");
+        expect(pd['Gene']['ChemicalSubstance']).toHaveLength(2)
         expect(pd['Gene']['ChemicalSubstance']).toContain("treats");
         expect(pd).toHaveProperty("PhenotypicFeature");
         expect(pd).not.toHaveProperty("chemical")
@@ -77,7 +85,4 @@ describe("Testing constructing predicates", () => {
         const pd = await predicates("978fe380a147a8641caf72320862697b");
         expect(pd).toEqual({});
     });
-
-
-
 });

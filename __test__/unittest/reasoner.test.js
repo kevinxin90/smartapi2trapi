@@ -1,4 +1,4 @@
-const translator = require("../src/translate");
+const translator = require("../../src/translate");
 
 describe("Testing Reasoner Std API Query Graph Translator", () => {
     let queryGraph;

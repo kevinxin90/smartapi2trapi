@@ -28,6 +28,20 @@ describe("Testing constructing predicates", () => {
                         },
                         {
                             association: {
+                                input_type: "Gene",
+                                output_type: "ChemicalSubstance",
+                                predicate: "treats"
+                            }
+                        },
+                        {
+                            association: {
+                                input_type: "Gene",
+                                output_type: "Disease",
+                                predicate: "related_to"
+                            }
+                        },
+                        {
+                            association: {
                                 input_type: "PhenotypicFeature",
                                 output_type: "ChemicalSubstance",
                                 predicate: "related_to"
@@ -42,6 +56,9 @@ describe("Testing constructing predicates", () => {
         })
         const pd = await predicates("978fe380a147a8641caf72320862697b");
         expect(pd).toHaveProperty("Gene");
+        expect(pd['Gene']).toHaveProperty("ChemicalSubstance");
+        expect(pd['Gene']).toHaveProperty("Disease");
+        expect(pd['Gene']['ChemicalSubstance']).toContain("treats");
         expect(pd).toHaveProperty("PhenotypicFeature");
         expect(pd).not.toHaveProperty("chemical")
     });

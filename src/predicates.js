@@ -1,12 +1,13 @@
 const meta_kg = require("@biothings-explorer/smartapi-kg");
-const kg = new meta_kg();
 const snakeCase = require("snake-case");
 
 
 module.exports = async (smartapiID) => {
+    const kg = new meta_kg();
     await kg.constructMetaKG(false, "translator", smartapiID);
     let predicates = {};
-    kg.ops.map(op => {
+    const ops = kg.getOps();
+    ops.map(op => {
         let input = snakeCase.snakeCase(op.association.input_type);
         let output = snakeCase.snakeCase(op.association.output_type);
         let pred = snakeCase.snakeCase(op.association.predicate);

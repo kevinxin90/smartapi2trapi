@@ -1,3 +1,7 @@
+/**
+ * Expand Biomedical objects to include its descendant objects.
+ * @module smartapi2trapi/expand
+ */
 const metakg = require("@biothings-explorer/smartapi-kg");
 const call_api = require("@biothings-explorer/call-apis");
 const _ = require("lodash");

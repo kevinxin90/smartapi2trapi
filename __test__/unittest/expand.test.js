@@ -67,9 +67,50 @@ describe("Testing constructing predicates", () => {
         expect(res).toEqual("NCBIGene:1017");
     });
 
+    test("test id2curie if id should not be prefixed and value is integer", () => {
+        const ep = new expand();
+        const res = ep.id2curie("NCBIGene", 1017)
+        expect(res).toEqual("NCBIGene:1017");
+    });
+
     test("test id2curie if id should be prefixed", () => {
         const ep = new expand();
         const res = ep.id2curie("HP", "HP:0007")
         expect(res).toEqual("HP:0007");
     });
+
+    test("test parseResponse if input is an empty array", () => {
+        const ep = new expand();
+        const res = ep.parseResponse([]);
+        expect(res).toBeUndefined();
+    });
+
+    test("test parseResponse if input is not an array", () => {
+        const ep = new expand();
+        const res = ep.parseResponse({});
+        expect(res).toBeUndefined();
+    });
+
+    test("test parseResponse with valid input", () => {
+        const ep = new expand();
+        const input = [
+            {
+                "$input": "NCBIGene:1017",
+                "$output_id_mapping": {
+                    resolved: {
+                        id: {
+                            identifier: "CHEBML744"
+                        }
+                    }
+                }
+            }
+        ];
+        const res = ep.parseResponse(input);
+        console.log("res", res);
+        console.log("res[input[0]", res[input[0]["$input"]])
+        expect(res).toHaveProperty(input[0]["$input"]);
+        expect(res[input[0]["$input"]]).toHaveProperty(input[0]["$output_id_mapping"].resolved.id.identifier);
+    });
+
+
 });

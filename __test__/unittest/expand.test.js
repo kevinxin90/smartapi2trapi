@@ -33,8 +33,11 @@ describe("Testing expand module", () => {
     })
 
     describe("test groupByEdges", () => {
+        let ep;
+        beforeEach(() => {
+            ep = new expand();
+        });
         test("test groupByEdges using valid output_ids", () => {
-            const ep = new expand();
             const output_ids = [
                 {
                     curie: "NCBIGene:1017",
@@ -57,7 +60,6 @@ describe("Testing expand module", () => {
         })
 
         test("test groupByEdges if output ids is empty", () => {
-            const ep = new expand();
             const output_ids = [];
             const res = ep.groupIDsbySemanticType(output_ids);
             expect(res).toEqual({});
@@ -65,40 +67,42 @@ describe("Testing expand module", () => {
     })
 
     describe("test id2curie", () => {
+        let ep;
+        beforeEach(() => {
+            ep = new expand();
+        });
         test("test id2curie if id should not be prefixed", () => {
-            const ep = new expand();
             const res = ep.id2curie("NCBIGene", "1017")
             expect(res).toEqual("NCBIGene:1017");
         });
 
         test("test id2curie if id should not be prefixed and value is integer", () => {
-            const ep = new expand();
             const res = ep.id2curie("NCBIGene", 1017)
             expect(res).toEqual("NCBIGene:1017");
         });
 
         test("test id2curie if id should be prefixed", () => {
-            const ep = new expand();
             const res = ep.id2curie("HP", "HP:0007")
             expect(res).toEqual("HP:0007");
         });
     })
 
     describe("test parseResponse", () => {
+        let ep;
+        beforeEach(() => {
+            ep = new expand();
+        });
         test("test parseResponse if input is an empty array", () => {
-            const ep = new expand();
             const res = ep.parseResponse([]);
             expect(res).toBeUndefined();
         });
 
         test("test parseResponse if input is not an array", () => {
-            const ep = new expand();
             const res = ep.parseResponse({});
             expect(res).toBeUndefined();
         });
 
         test("test parseResponse with valid input", () => {
-            const ep = new expand();
             const input = [
                 {
                     "$input": "NCBIGene:1017",
@@ -119,42 +123,61 @@ describe("Testing expand module", () => {
 
     describe("test annotateEdgesWithInput method", () => {
         let ep;
+        const edge1 = {
+            query_operation: {
+                supportBatch: true
+            },
+            association: {
+                input_id: "NCBIGene"
+            }
+        };
+        const edge2 = {
+            query_operation: {
+                supportBatch: false
+            },
+            association: {
+                input_id: "NCBIGene"
+            }
+        };
+        const input1 = {
+            db_ids: {
+                "NCBIGene": ["1017"]
+            }
+        };
+        const input2 = {
+            db_ids: {
+                "NCBIGene": ["1018"]
+            }
+        };
+        const input3 = {
+            db_ids: {
+                "dd": [111]
+            }
+        }
         beforeEach(() => {
             ep = new expand();
         });
         test("test with valid inputs", () => {
             const edges = [
-                {
-                    query_operation: {
-                        supportBatch: true
-                    },
-                    association: {
-                        input_id: "NCBIGene"
-                    }
-                },
-                {
-                    query_operation: {
-                        supportBatch: false
-                    },
-                    association: {
-                        input_id: "NCBIGene"
-                    }
-                },
+                edge1,
+                edge2,
             ];
             const inputs = [
-                {
-                    db_ids: {
-                        "NCBIGene": ["1017"]
-                    }
-                },
-                {
-                    db_ids: {
-                        "NCBIGene": ["1018"]
-                    }
-                }
+                input1, input2, input3
             ];
             const res = ep.annotateEdgesWithInput(edges, inputs);
             expect(res).toHaveLength(3);
+            expect(res[0]).toHaveProperty("input", ["1017", "1018"]);
+            expect(res[1]).toHaveProperty("input", "1017");
+            expect(res[2]).toHaveProperty("input", "1018");
+        })
+        test("test input id not an array", () => {
+            const edges = [edge1];
+            const inputs = input1;
+            const res = ep.annotateEdgesWithInput(edges, inputs);
+            expect(res).toHaveLength(1);
+            expect(res[0]).toHaveProperty("input", ["1017"]);
+            expect(res[0]).toHaveProperty("original_input");
         })
     })
 });

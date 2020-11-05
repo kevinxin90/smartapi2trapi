@@ -2,12 +2,21 @@ const metakg = require("@biothings-explorer/smartapi-kg");
 const call_api = require("@biothings-explorer/call-apis");
 const _ = require("lodash");
 
+/** Class to perform node expansion. */
 module.exports = class Expander {
+    /**
+     * Initialize metaKG.
+     */
     constructor() {
         this.kg = new metakg();
         this.kg.constructMetaKGSync("biothings");
     }
 
+    /**
+     * Retrieve an array of SmartAPI edges delivering subclass relationship
+     * @param {string} - semanticType 
+     * @return {Array} - An array of SmartAPI edges
+     */
     getEdges(semanticType) {
         return this.kg.filter({
             input_type: semanticType,
@@ -16,6 +25,11 @@ module.exports = class Expander {
         })
     }
 
+    /**
+     * Restructure response from call api
+     * @param {Array} res - An array of structured response
+     * @return {object} The restructured response.
+     */
     parseResponse(res) {
         if (Array.isArray(res) && res.length > 0) {
             let result = {};
@@ -31,6 +45,11 @@ module.exports = class Expander {
         }
     }
 
+    /**
+     * Group outputs based on semantic type
+     * @param {Array} output_ids - An array of output biomedical objects.
+     * @return {Object} 
+     */
     groupIDsbySemanticType(output_ids) {
         let result = {};
         output_ids.map(item => {
@@ -42,6 +61,12 @@ module.exports = class Expander {
         return result
     }
 
+    /**
+     * Make a curie based on ID
+     * @param {string} prefix - id prefix
+     * @param {string} val - id value
+     * @return {string} curie
+     */
     id2curie(prefix, val) {
         const ID_WITH_PREFIXES = ["MONDO", "DOID", "UBERON",
             "EFO", "HP", "CHEBI", "CL", "MGI"];
@@ -51,6 +76,11 @@ module.exports = class Expander {
         return prefix + ':' + val;
     }
 
+    /**
+     * Create bte edges based on SmartAPI edges and inputs
+     * @param {array} edges - an array of SmartAPI edges
+     * @param {array} inputs - an array of input objects
+     */
     annotateEdgesWithInput(edges, inputs) {
         if (!Array.isArray(inputs)) {
             inputs = [inputs];

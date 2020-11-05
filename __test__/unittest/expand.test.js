@@ -113,11 +113,33 @@ describe("Testing expand module", () => {
                             }
                         }
                     }
-                }
+                },
+                {
+                    "$input": "NCBIGene:1017",
+                    "$output_id_mapping": {
+                        resolved: {
+                            id: {
+                                identifier: "CHEBML745"
+                            }
+                        }
+                    }
+                },
+                {
+                    "$input": "NCBIGene:1018",
+                },
+                {
+                    "$input": "NCBIGene:1019",
+                    "$output_id_mapping": {
+                    }
+                },
             ];
             const res = ep.parseResponse(input);
             expect(res).toHaveProperty(input[0]["$input"]);
+            expect(res).toHaveProperty(input[1]["$input"]);
             expect(res[input[0]["$input"]]).toHaveProperty(input[0]["$output_id_mapping"].resolved.id.identifier);
+            expect(res[input[0]["$input"]]).toHaveProperty(input[1]["$output_id_mapping"].resolved.id.identifier);
+            expect(res[input[2]["$input"]]).toEqual({});
+            expect(res[input[3]["$input"]]).toEqual({});
         });
     })
 

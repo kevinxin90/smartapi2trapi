@@ -115,9 +115,6 @@ module.exports = class Expander {
                 inputs.map(_input => {
                     let prefix = edge.association.input_id;
                     if (prefix in _input.db_ids) {
-                        if (!Array.isArray(_input.db_ids[prefix])) {
-                            _input.db_ids[prefix] = [_input.db_ids[prefix]]
-                        }
                         _input.db_ids[prefix].map(_id => {
                             let copy_edge = _.cloneDeep(edge);
                             copy_edge.input = _id;

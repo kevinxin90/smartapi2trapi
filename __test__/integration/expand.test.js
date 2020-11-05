@@ -29,5 +29,17 @@ describe("Testing Expand Module", () => {
             expect(res).not.toEqual({});
             expect(res["MONDO:0016575"]).toHaveProperty("MONDO:0008984")
         });
+        test("test expand method if input type is valid, but input id is not valid", async () => {
+            const inputs = [
+                {
+                    type: "Disease",
+                    db_ids: {
+                        mm: ["MONDO:0016575"]
+                    },
+                }
+            ];
+            const res = await ep.expand(inputs);
+            expect(res).toEqual({});
+        });
     });
 });
